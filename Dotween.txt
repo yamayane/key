@@ -1,0 +1,75 @@
+
+◆完了後に実行
+.OnComplete(()=>
+            { 
+        
+        }); 
+
+◆待機後に実行
+DOVirtual.DelayedCall(1.0f, () =>
+{
+
+});
+
+◆ループ後の待機に実行
+.OnStepComplete(() =>
+
+).SetLoops(-1, LoopType.Yoyo);
+
+
+◆今いる場所から移動する（相対移動）
+.SetRelative();
+
+
+◆time.scaleの影響を受けない
+.SetUpdate(true)
+
+
+◆連続移動
+var sequence = DOTween.Sequence();
+	sequence.AppendInterval(2)
+	.Append(transform.DOMoveY(1, 2))
+	.AppendInterval(2)
+	.Append(transform.DOMoveY(3, 2));
+
+
+◆連続移動中に処理
+                .Append(transform.DOLookAt(EnemyGunMovePosA.transform.position, 1))
+                .AppendCallback(() =>
+                      {
+                         rayStop = false;
+                      })
+                .Append(transform.DOMove(EnemyGunMovePosA.transform.position, MoveSpeed))
+
+
+
+◆オブジェクトが消えたら自動で消える
+.SetLink(gameObject)
+
+
+
+
+◆曲線移動
+Vector3[] path = {
+    new Vector3(0f, 100f, 0f),
+    new Vector3(200f, 0f, 0f),
+};
+
+obj.GetComponent().DOLocalPath(path, 1f, PathType.CatmullRom).SetEase(Ease.Linear);
+
+◆直線移動
+Vector3[] path = {
+    new Vector3(0f, 100f, 0f),
+    new Vector3(200f, 0f, 0f),
+};
+
+obj.transform.DOLocalPath(path, 1f, PathType.Linear).SetEase(Ease.Linear);
+
+◆回転
+        //回転
+        bombObj.transform.DOLocalRotate(new Vector3(0, 0, 360f), 5.0f, RotateMode.FastBeyond360)
+        .SetEase(Ease.Linear)
+        .SetLoops(-1, LoopType.Restart);
+
+◆繰り返し
+.SetLoops(-1, LoopType.Yoyo);
